@@ -1,0 +1,84 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bookings",
+  "info": {
+    "singularName": "booking",
+    "pluralName": "bookings",
+    "displayName": "Booking"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "uuid": {
+      "type": "string",
+      "unique": true,
+      "configurable": false
+    },
+    "ref": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "flight",
+        "hotel",
+        "golf",
+        "chauffeur"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "supplierRef": {
+      "type": "string"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "confirmed",
+        "pending_confirmation",
+        "cancelled",
+        "cancelled_refund_pending",
+        "cancelled_by_partner",
+        "rescheduled",
+        "flown",
+        "played",
+        "check_in_denied"
+      ]
+    },
+    "statusNote": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "decimal"
+    },
+    "currency": {
+      "type": "string",
+      "default": "INR"
+    },
+    "travelDate": {
+      "type": "datetime"
+    },
+    "endDate": {
+      "type": "date"
+    },
+    "isNative": {
+      "type": "boolean",
+      "default": true
+    },
+    "member": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::member.member"
+    },
+    "channelPartner": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::partner.partner"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "agents",
+  "info": {
+    "singularName": "agent",
+    "pluralName": "agents",
+    "displayName": "Agent"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "uuid": {
+      "type": "string",
+      "unique": true,
+      "configurable": false
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "unique": true
+    },
+    "role": {
+      "type": "enumeration",
+      "enum": [
+        "l1",
+        "l2",
+        "relationship_manager",
+        "team_leader",
+        "back_office",
+        "outbound",
+        "escalation"
+      ]
+    },
+    "pod": {
+      "type": "string"
+    },
+    "availability": {
+      "type": "enumeration",
+      "enum": [
+        "available",
+        "busy",
+        "offline"
+      ]
+    },
+    "members": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::member.member",
+      "mappedBy": "relationshipManager"
+    }
+  }
+}

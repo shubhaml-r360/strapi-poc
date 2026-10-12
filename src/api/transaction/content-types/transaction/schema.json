@@ -1,0 +1,108 @@
+{
+  "kind": "collectionType",
+  "collectionName": "transactions",
+  "info": {
+    "singularName": "transaction",
+    "pluralName": "transactions",
+    "displayName": "Transaction"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "uuid": {
+      "type": "string",
+      "unique": true,
+      "configurable": false
+    },
+    "ref": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "occurredAt": {
+      "type": "datetime"
+    },
+    "kind": {
+      "type": "enumeration",
+      "enum": [
+        "payment",
+        "refund",
+        "fee",
+        "redemption"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "decimal"
+    },
+    "points": {
+      "type": "integer"
+    },
+    "method": {
+      "type": "enumeration",
+      "enum": [
+        "card",
+        "payment_link",
+        "points",
+        "points_plus_payment"
+      ]
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "paid",
+        "refunded",
+        "failed",
+        "disputed",
+        "pending"
+      ]
+    },
+    "settlement": {
+      "type": "enumeration",
+      "enum": [
+        "settled",
+        "refunding",
+        "failed",
+        "disputed",
+        "returned"
+      ]
+    },
+    "statusNote": {
+      "type": "string"
+    },
+    "disputeRef": {
+      "type": "string"
+    },
+    "disputeStatus": {
+      "type": "enumeration",
+      "enum": [
+        "open",
+        "resolved"
+      ]
+    },
+    "member": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::member.member"
+    },
+    "booking": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::booking.booking"
+    },
+    "request": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::request.request"
+    },
+    "complaint": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::complaint.complaint"
+    }
+  }
+}

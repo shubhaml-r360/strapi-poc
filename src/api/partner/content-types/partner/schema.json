@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "partners",
+  "info": {
+    "singularName": "partner",
+    "pluralName": "partners",
+    "displayName": "Partner"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "uuid": {
+      "type": "string",
+      "unique": true,
+      "configurable": false
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "bank_platform",
+        "ota",
+        "vendor",
+        "erp"
+      ]
+    },
+    "contractedHeldHours": {
+      "type": "integer"
+    },
+    "contractedRefundDays": {
+      "type": "integer"
+    },
+    "contractedAmendmentHours": {
+      "type": "integer"
+    },
+    "contractedConfirmationHours": {
+      "type": "integer"
+    },
+    "viaPartner": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::partner.partner"
+    }
+  }
+}

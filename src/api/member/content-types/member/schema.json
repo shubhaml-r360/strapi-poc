@@ -1,0 +1,74 @@
+{
+  "kind": "collectionType",
+  "collectionName": "members",
+  "info": {
+    "singularName": "member",
+    "pluralName": "members",
+    "displayName": "Member"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "uuid": {
+      "type": "string",
+      "unique": true,
+      "configurable": false
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "card": {
+      "type": "enumeration",
+      "enum": [
+        "infinia",
+        "infinia_metal",
+        "diners_black"
+      ]
+    },
+    "segment": {
+      "type": "enumeration",
+      "enum": [
+        "hni",
+        "uhni",
+        "ultra_uhni"
+      ]
+    },
+    "preferredChannel": {
+      "type": "enumeration",
+      "enum": [
+        "whatsapp",
+        "email",
+        "phone"
+      ]
+    },
+    "satisfaction": {
+      "type": "decimal"
+    },
+    "flags": {
+      "type": "json"
+    },
+    "migrationStatus": {
+      "type": "enumeration",
+      "enum": [
+        "migrated",
+        "not_migrated",
+        "outside_pilot"
+      ]
+    },
+    "relationshipManager": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::agent.agent",
+      "inversedBy": "members"
+    }
+  }
+}

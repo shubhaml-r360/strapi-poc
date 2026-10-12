@@ -1,0 +1,136 @@
+{
+  "kind": "collectionType",
+  "collectionName": "requests",
+  "info": {
+    "singularName": "request",
+    "pluralName": "requests",
+    "displayName": "Request"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "uuid": {
+      "type": "string",
+      "unique": true,
+      "configurable": false
+    },
+    "ref": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "subject": {
+      "type": "string",
+      "required": true
+    },
+    "requestType": {
+      "type": "string"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "new",
+        "in_progress",
+        "waiting_on_partner",
+        "waiting_on_member",
+        "escalated",
+        "resolved"
+      ]
+    },
+    "priority": {
+      "type": "enumeration",
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "urgent"
+      ]
+    },
+    "channel": {
+      "type": "enumeration",
+      "enum": [
+        "phone",
+        "email",
+        "whatsapp",
+        "web"
+      ]
+    },
+    "summary": {
+      "type": "text"
+    },
+    "remark": {
+      "type": "text"
+    },
+    "openedAt": {
+      "type": "datetime"
+    },
+    "dueAt": {
+      "type": "datetime"
+    },
+    "contractedTurnaroundHours": {
+      "type": "integer"
+    },
+    "clockStoppedReason": {
+      "type": "string"
+    },
+    "heldByType": {
+      "type": "enumeration",
+      "enum": [
+        "l1",
+        "l2",
+        "back_office",
+        "ota",
+        "vendor",
+        "bank",
+        "member"
+      ]
+    },
+    "heldByLabel": {
+      "type": "string"
+    },
+    "closureState": {
+      "type": "enumeration",
+      "enum": [
+        "confirmed",
+        "deemed",
+        "unresolved",
+        "withdrawn",
+        "duplicate"
+      ]
+    },
+    "resolutionCode": {
+      "type": "string"
+    },
+    "closedAt": {
+      "type": "datetime"
+    },
+    "member": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::member.member"
+    },
+    "owner": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::agent.agent"
+    },
+    "heldByPartner": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::partner.partner"
+    },
+    "booking": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::booking.booking"
+    },
+    "complaint": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::complaint.complaint",
+      "inversedBy": "request"
+    }
+  }
+}

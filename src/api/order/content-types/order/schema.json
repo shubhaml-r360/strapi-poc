@@ -1,0 +1,77 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "singularName": "order",
+    "pluralName": "orders",
+    "displayName": "Order"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "uuid": {
+      "type": "string",
+      "unique": true,
+      "configurable": false
+    },
+    "ref": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "item": {
+      "type": "string"
+    },
+    "orderType": {
+      "type": "enumeration",
+      "enum": [
+        "physical",
+        "e_voucher",
+        "points_transfer"
+      ]
+    },
+    "fulfilledVia": {
+      "type": "string"
+    },
+    "points": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "dispatched",
+        "delivered",
+        "credited",
+        "not_received",
+        "not_working",
+        "cancelled"
+      ]
+    },
+    "note": {
+      "type": "string"
+    },
+    "occurrenceCount": {
+      "type": "integer"
+    },
+    "escalationRef": {
+      "type": "string"
+    },
+    "member": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::member.member"
+    },
+    "vendor": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::partner.partner"
+    },
+    "request": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::request.request"
+    }
+  }
+}
