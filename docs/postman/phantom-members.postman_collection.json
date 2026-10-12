@@ -1,0 +1,141 @@
+{
+  "info": {
+    "name": "Phantom Strapi POC · Members",
+    "description": "CRUD for the Member model. Import into Postman, then set the `token` collection variable to your Strapi API token (Settings → API Tokens in the Strapi admin). Never commit a real token.\n\nWrite requests wrap the payload in `{ \"data\": { ... } }`. Update and delete use the record's `documentId`, not the numeric id.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://strapi-poc-gph5.onrender.com/api" },
+    { "key": "token", "value": "" },
+    { "key": "memberId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "List members",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/members",
+          "host": ["{{baseUrl}}"],
+          "path": ["members"]
+        }
+      }
+    },
+    {
+      "name": "List members (with relationship manager, paged)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/members?populate=relationshipManager&pagination[page]=1&pagination[pageSize]=25&sort=name:asc",
+          "host": ["{{baseUrl}}"],
+          "path": ["members"],
+          "query": [
+            { "key": "populate", "value": "relationshipManager" },
+            { "key": "pagination[page]", "value": "1" },
+            { "key": "pagination[pageSize]", "value": "25" },
+            { "key": "sort", "value": "name:asc" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Find member by name",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/members?filters[name][$eq]=Amit Chawla&populate=relationshipManager",
+          "host": ["{{baseUrl}}"],
+          "path": ["members"],
+          "query": [
+            { "key": "filters[name][$eq]", "value": "Amit Chawla" },
+            { "key": "populate", "value": "relationshipManager" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get one member",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/members/{{memberId}}?populate=relationshipManager",
+          "host": ["{{baseUrl}}"],
+          "path": ["members", "{{memberId}}"],
+          "query": [{ "key": "populate", "value": "relationshipManager" }]
+        },
+        "description": "Set the `memberId` collection variable to a member's documentId (from any list response)."
+      }
+    },
+    {
+      "name": "Create member",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Save the new member's documentId so Get / Update / Delete work right after.",
+              "if (pm.response.code === 200 || pm.response.code === 201) {",
+              "  pm.collectionVariables.set('memberId', pm.response.json().data.documentId);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"data\": {\n    \"name\": \"Test Member\",\n    \"phone\": \"+919810000000\",\n    \"email\": \"test.member@example.com\",\n    \"card\": \"infinia\",\n    \"segment\": \"hni\",\n    \"preferredChannel\": \"whatsapp\",\n    \"satisfaction\": 4.2,\n    \"flags\": [\n      { \"label\": \"New member\", \"severity\": \"info\" }\n    ],\n    \"migrationStatus\": \"migrated\"\n  }\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/members",
+          "host": ["{{baseUrl}}"],
+          "path": ["members"]
+        },
+        "description": "Only `name` is required.\n\ncard: infinia | infinia_metal | diners_black\nsegment: hni | uhni | ultra_uhni\npreferredChannel: whatsapp | email | phone\nmigrationStatus: migrated | not_migrated | outside_pilot\n\nTo assign a relationship manager add `\"relationshipManager\": \"<agent documentId>\"`."
+      }
+    },
+    {
+      "name": "Update member",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"data\": {\n    \"satisfaction\": 4.8,\n    \"preferredChannel\": \"email\"\n  }\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/members/{{memberId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["members", "{{memberId}}"]
+        },
+        "description": "Send only the fields to change. `uuid` is server-managed and ignored."
+      }
+    },
+    {
+      "name": "Delete member",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/members/{{memberId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["members", "{{memberId}}"]
+        },
+        "description": "Returns 204 on success."
+      }
+    }
+  ]
+}
